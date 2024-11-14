@@ -11,16 +11,23 @@ public class DatabaseConnection {
     private static Connection connection = null;
 
     public static Connection connect() {
-        if (connection == null) {
+        if (connection == null || !isValidConnection()) {
             try {
                 connection = DriverManager.getConnection(URL);
-                System.out.println("Database connected successfully.");
             } catch (SQLException e) {
                 System.out.println("Error connecting to the database.");
                 e.printStackTrace();
             }
         }
         return connection;
+    }
+
+    private static boolean isValidConnection() {
+        try {
+            return connection != null && !connection.isClosed();
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public static void createTableIfNotExists() {
@@ -33,9 +40,10 @@ public class DatabaseConnection {
                 "category TEXT, " +
                 "content TEXT, " +
                 "child_type INTEGER NOT NULL)";
-        try (Statement stmt = connect().createStatement()) {
+        Connection conn = connect();
+
+        try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table created or already exists.");
         } catch (SQLException e) {
             System.out.println("Error creating the table.");
             e.printStackTrace();
@@ -45,8 +53,10 @@ public class DatabaseConnection {
     public static void closeConnection() {
         if (connection != null) {
             try {
-                connection.close();
-                System.out.println("Database connection closed.");
+                if (!connection.isClosed()) {
+                    connection.close();
+                    System.out.println("Database connection closed.");
+                }
             } catch (SQLException e) {
                 System.out.println("Failed to close the connection.");
                 e.printStackTrace();

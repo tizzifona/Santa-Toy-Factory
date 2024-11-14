@@ -15,7 +15,6 @@ import java.io.*;
 public class ToyRepository {
 
     public ToyRepository() {
-        DatabaseConnection.createTableIfNotExists();
     }
 
     public void addToy(ToyDTO toyDTO, int childType) {
@@ -24,7 +23,9 @@ public class ToyRepository {
 
         String query = "INSERT INTO toys (custom_id, title, brand, recommended_age, category, content, child_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseConnection.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, customId);
             stmt.setString(2, toyDTO.getTitle());
             stmt.setString(3, toyDTO.getBrand());
@@ -35,7 +36,6 @@ public class ToyRepository {
 
             stmt.executeUpdate();
             System.out.println("\033[33mToy added successfully!\033[0m");
-
         } catch (SQLException e) {
             System.out.println("Error adding toy!");
             e.printStackTrace();
