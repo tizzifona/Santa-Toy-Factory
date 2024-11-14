@@ -1,8 +1,19 @@
 package projects.f5.toys_java.views;
 
+import java.util.List;
+
 import projects.f5.toys_java.dtos.ToyDTO;
+import projects.f5.toys_java.models.Toy;
 
 public class ElfView extends View {
+
+    public int askForChildType() {
+        System.out.println("\033[32m1. Good Child\033[0m");
+        System.out.println("\033[31m2. Bad Child\033[0m");
+        System.out.print("Please select the child type: ");
+        return scanner.nextInt();
+    }
+
     public int showElfMenu() {
         System.out.println("\033[32m1. Add Toy\033[0m");
         System.out.println("\033[32m2. View All Toys\033[0m");
@@ -36,5 +47,11 @@ public class ElfView extends View {
         scanner.nextLine();
         System.out.print("Enter the toy ID to delete: ");
         return scanner.nextLine();
+    }
+
+    public void displayToys(List<Toy> toys) {
+        for (Toy toy : toys) {
+            System.out.println(toy);
+        }
     }
 }
