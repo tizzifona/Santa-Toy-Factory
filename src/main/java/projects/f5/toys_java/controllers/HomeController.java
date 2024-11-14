@@ -11,6 +11,10 @@ public class HomeController {
         this.toyController = toyController;
     }
 
+    public int showMainMenu() {
+        return homeView.showMainMenu();
+    }
+
     public void run() {
         boolean running = true;
         while (running) {
@@ -29,4 +33,5 @@ public class HomeController {
             }
         }
     }
+
 }
