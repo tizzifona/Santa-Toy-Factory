@@ -25,22 +25,32 @@ public class SantaView extends View {
     }
 
     public void displayToys(List<Toy> toys) {
+        String cyanColor = "\u001B[36m";
+        String resetColor = "\u001B[0m";
+
         if (toys.isEmpty()) {
             System.out.println("\033[31mNo toys available.\033[0m");
         } else {
-            System.out.println("\033[32mToys List:\033[0m");
+            System.out.println();
+            System.out.println("\033[34mToys List:\033[0m\n");
+
             for (Toy toy : toys) {
-                System.out.println("ID: " + toy.getId() + ", Title: " + toy.getTitle());
+                System.out.println(cyanColor + "❄️" + toy.getCustomId());
+                System.out.println("Title: " + toy.getTitle());
+
                 if (toy instanceof GoodToy) {
                     GoodToy goodToy = (GoodToy) toy;
-                    System.out.println("Brand: " + goodToy.getBrand() + ", Age: " + goodToy.getRecommendedAge() +
-                            ", Category: " + goodToy.getCategory());
+                    System.out.println("Brand: " + goodToy.getBrand());
+                    System.out.println("Recommended Age: " + goodToy.getRecommendedAge());
+                    System.out.println("Category: " + goodToy.getCategory());
                 } else if (toy instanceof BadToy) {
                     BadToy badToy = (BadToy) toy;
                     System.out.println("Content: " + badToy.getContent());
                 }
-                System.out.println("-----------------------------");
+
+                System.out.println("-----------------------------" + resetColor);
             }
         }
     }
+
 }
