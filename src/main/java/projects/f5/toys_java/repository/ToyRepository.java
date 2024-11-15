@@ -9,8 +9,7 @@ import projects.f5.toys_java.dtos.ToyDTO;
 import projects.f5.toys_java.models.BadToy;
 import projects.f5.toys_java.models.GoodToy;
 import projects.f5.toys_java.models.Toy;
-
-import java.io.*;
+import projects.f5.toys_java.utils.CSVSaver;
 
 public class ToyRepository {
 
@@ -127,25 +126,7 @@ public class ToyRepository {
 
     public void saveToysToCSV(String filename) {
         List<Toy> toys = getAllToys();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("ID,Title,Brand,Recommended Age,Category,Content\n");
-
-            for (Toy toy : toys) {
-
-                if (toy instanceof GoodToy) {
-                    GoodToy goodToy = (GoodToy) toy;
-                    writer.write(goodToy.getId() + "," + goodToy.getTitle() + "," + goodToy.getBrand() + "," +
-                            goodToy.getRecommendedAge() + "," + goodToy.getCategory() + ",\n");
-                }
-
-                else if (toy instanceof BadToy) {
-                    BadToy badToy = (BadToy) toy;
-                    writer.write(badToy.getId() + "," + badToy.getTitle() + ",,," + badToy.getContent() + "\n");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CSVSaver.saveToysToCSV(filename, toys);
     }
 
 }
