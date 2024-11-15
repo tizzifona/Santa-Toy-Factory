@@ -8,6 +8,8 @@ import java.util.List;
 public class SantaView extends View {
 
     public int showSantaMenu() {
+        System.out.println();
+        System.out.println("\033[34mToy Manager (Session Type: Santa)\033[0m\n");
         System.out.println("\033[34m1. View Good Children Toys\033[0m");
         System.out.println("\033[34m2. View Bad Children Toys\033[0m");
         System.out.println("\033[34m3. Save All Toys to CSV\033[0m");
