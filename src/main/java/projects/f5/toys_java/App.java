@@ -1,6 +1,7 @@
 package projects.f5.toys_java;
 
 import projects.f5.toys_java.bd.DatabaseConnection;
+import projects.f5.toys_java.bd.DatabaseManipulation;
 import projects.f5.toys_java.controllers.HomeController;
 import projects.f5.toys_java.controllers.ToyController;
 import projects.f5.toys_java.repository.ToyRepository;
@@ -10,7 +11,7 @@ import projects.f5.toys_java.views.SantaView;
 
 public class App {
     public static void main(String[] args) {
-        DatabaseConnection.createTableIfNotExists();
+        DatabaseManipulation.createTableIfNotExists();
 
         HomeView homeView = new HomeView();
         ElfView elfView = new ElfView();
