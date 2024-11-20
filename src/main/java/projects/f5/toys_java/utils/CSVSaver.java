@@ -11,15 +11,18 @@ import projects.f5.toys_java.models.GoodToy;
 import projects.f5.toys_java.models.Toy;
 
 public class CSVSaver {
-    public static void saveToysToCSV(String filename, List<Toy> toys) {
-        String userHome = System.getProperty("user.home");
-        String downloadPath = Paths.get(userHome, "Downloads", filename).toString();
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(downloadPath))) {
+    public static void saveToysToCSV(String filename, List<Toy> toys) {
+        if (!filename.toLowerCase().endsWith(".csv")) {
+            filename += ".csv";
+        }
+        String projectPath = Paths.get("").toAbsolutePath().toString();
+        String filePath = Paths.get(projectPath, filename).toString();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             if (toys.isEmpty()) {
                 writer.write("No toys found\n");
-                System.out
-                        .println("\033[33mNo toys found. File saved to Downloads folder: " + downloadPath + "\033[0m");
+                System.out.println("\033[33mNo toys found. File saved to project folder: " + filePath + "\033[0m");
                 return;
             }
 
@@ -65,10 +68,11 @@ public class CSVSaver {
                 writer.write("No bad toys found\n");
             }
 
-            System.out.println("\033[32mFile saved to Downloads folder: " + downloadPath + "\033[0m");
+            System.out.println("\033[32mFile saved to project folder successfully!!! \033[0m");
         } catch (IOException e) {
             System.out.println("\033[31mError saving file!\033[0m");
             e.printStackTrace();
         }
     }
+
 }
