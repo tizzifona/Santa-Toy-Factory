@@ -3,7 +3,7 @@ package projects.f5.toys_java.views;
 import java.util.Scanner;
 
 public abstract class View {
-    protected final Scanner scanner = new Scanner(System.in);
+    protected Scanner scanner = new Scanner(System.in);
 
     public void closeScanner() {
         scanner.close();

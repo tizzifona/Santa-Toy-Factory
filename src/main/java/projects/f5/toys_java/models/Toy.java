@@ -29,4 +29,9 @@ public class Toy {
         return childType;
     }
 
+    @Override
+    public String toString() {
+        return "Toy{id='" + id + "', customId='" + customId + "', title='" + title + "', childType=" + childType + "}";
+    }
+
 }
