@@ -10,6 +10,7 @@ import projects.f5.toys_java.models.BadToy;
 import projects.f5.toys_java.models.GoodToy;
 import projects.f5.toys_java.models.Toy;
 import projects.f5.toys_java.utils.CSVSaver;
+import projects.f5.toys_java.utils.CustomId;
 
 public class ToyRepository {
 
@@ -42,7 +43,7 @@ public class ToyRepository {
         }
 
         String prefix = childType == 1 ? "G" : "B";
-        String customId = generateCustomId(prefix);
+        String customId = CustomId.generateCustomId(prefix);
 
         String query = "INSERT INTO toys (custom_id, title, brand, recommended_age, category, content, child_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -62,29 +63,6 @@ public class ToyRepository {
         } catch (SQLException e) {
             System.out.println("Error adding toy!");
             e.printStackTrace();
-        }
-    }
-
-    private String generateCustomId(String prefix) {
-        String query = "SELECT MAX(custom_id) AS max_id FROM toys WHERE custom_id LIKE ?";
-        String maxId = null;
-
-        try (Connection conn = DatabaseConnection.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, prefix + "%");
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                maxId = rs.getString("max_id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (maxId != null) {
-            int currentNumber = Integer.parseInt(maxId.substring(1));
-            return prefix + (currentNumber + 1);
-        } else {
-            return prefix + "1";
         }
     }
 
