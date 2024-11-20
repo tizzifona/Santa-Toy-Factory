@@ -18,13 +18,26 @@ public class ToyRepository {
 
     public void addToy(ToyDTO toyDTO, int childType) {
 
-        if (toyDTO == null || isNullOrEmpty(toyDTO.getTitle()) ||
-                isNullOrEmpty(toyDTO.getBrand()) ||
-                isNullOrEmpty(toyDTO.getCategory()) ||
-                isNullOrEmpty(toyDTO.getContent()) ||
-                toyDTO.getRecommendedAge() <= 0) {
+        if (toyDTO == null) {
+            System.out.println("Invalid toy data! Object is null.");
+            return;
+        }
 
-            System.out.println("Invalid toy data! Please ensure all fields are filled correctly.");
+        if (childType == 1) {
+            if (isNullOrEmpty(toyDTO.getTitle()) ||
+                    isNullOrEmpty(toyDTO.getBrand()) ||
+                    isNullOrEmpty(toyDTO.getCategory()) ||
+                    toyDTO.getRecommendedAge() <= 0) {
+                System.out.println("Invalid toy data for a good toy! Please ensure all fields are filled correctly.");
+                return;
+            }
+        } else if (childType == 2) {
+            if (isNullOrEmpty(toyDTO.getTitle()) || isNullOrEmpty(toyDTO.getContent())) {
+                System.out.println("Invalid toy data for a bad toy! Please ensure title and content are filled.");
+                return;
+            }
+        } else {
+            System.out.println("Invalid child type! Must be 1 (Good) or 2 (Bad).");
             return;
         }
 
