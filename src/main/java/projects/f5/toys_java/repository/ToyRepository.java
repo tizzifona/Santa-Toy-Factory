@@ -45,6 +45,11 @@ public class ToyRepository {
         String prefix = childType == 1 ? "G" : "B";
         String customId = CustomId.generateCustomId(prefix);
 
+        while (CustomId.isCustomIdExists(customId)) {
+            System.out.println("Duplicate custom_id found: " + customId + ". Regenerating...");
+            customId = CustomId.generateCustomId(prefix);
+        }
+
         String query = "INSERT INTO toys (custom_id, title, brand, recommended_age, category, content, child_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();
