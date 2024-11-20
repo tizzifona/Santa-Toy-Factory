@@ -17,6 +17,17 @@ public class ToyRepository {
     }
 
     public void addToy(ToyDTO toyDTO, int childType) {
+
+        if (toyDTO == null || isNullOrEmpty(toyDTO.getTitle()) ||
+                isNullOrEmpty(toyDTO.getBrand()) ||
+                isNullOrEmpty(toyDTO.getCategory()) ||
+                isNullOrEmpty(toyDTO.getContent()) ||
+                toyDTO.getRecommendedAge() <= 0) {
+
+            System.out.println("Invalid toy data! Please ensure all fields are filled correctly.");
+            return;
+        }
+
         String prefix = childType == 1 ? "G" : "B";
         String customId = generateCustomId(prefix);
 
@@ -127,6 +138,10 @@ public class ToyRepository {
     public void saveToysToCSV(String filename) {
         List<Toy> toys = getAllToys();
         CSVSaver.saveToysToCSV(filename, toys);
+    }
+
+    private boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 
 }
