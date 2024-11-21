@@ -54,8 +54,12 @@ public class ElfView extends View {
     }
 
     public void displayToys(List<Toy> toys) {
-        for (Toy toy : toys) {
-            System.out.println(toy);
+        if (toys.isEmpty()) {
+            System.out.println("\033[31mNo toys available\033[0m");
+        } else {
+            for (Toy toy : toys) {
+                System.out.println(toy);
+            }
         }
     }
 }
