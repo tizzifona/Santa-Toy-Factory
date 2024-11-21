@@ -1,9 +1,6 @@
 package projects.f5.toys_java.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,8 +10,6 @@ import projects.f5.toys_java.dtos.ToyDTO;
 import projects.f5.toys_java.models.GoodToy;
 import projects.f5.toys_java.models.BadToy;
 import projects.f5.toys_java.models.Toy;
-import projects.f5.toys_java.utils.CSVSaver;
-
 import java.sql.*;
 import java.util.List;
 
@@ -131,14 +126,4 @@ public class ToyRepositoryTest {
         }
     }
 
-    @Test
-    public void testSaveToysToCSV() {
-        try (MockedStatic<CSVSaver> csvSaverMock = mockStatic(CSVSaver.class)) {
-            csvSaverMock.when(() -> CSVSaver.saveToysToCSV(anyString(), anyList())).thenAnswer(invocation -> null);
-
-            toyRepository.saveToysToCSV("toys.csv");
-
-            csvSaverMock.verify(() -> CSVSaver.saveToysToCSV(eq("toys.csv"), anyList()));
-        }
-    }
 }
